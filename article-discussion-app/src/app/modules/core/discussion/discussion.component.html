@@ -16,6 +16,7 @@
         praesentium, ut expedita obcaecati facilis voluptatem nemo cupiditate. Ab dicta molestiae quis adipisci
         molestias, soluta veniam dolorem esse?</div>
     <div class="comments-section">
+        <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
     </div>
     <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef
         (focusin)="onFocusInTextArea(textAreaRef)" (focusout)="onFocusOutTextArea(textAreaRef)"

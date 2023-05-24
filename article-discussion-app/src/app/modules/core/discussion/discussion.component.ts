@@ -1,5 +1,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
+import { IComment } from '../../shared/interfaces/comment';
+
+import * as uniqid from 'uniqid';
+
 @Component({
     selector: 'app-discussion',
     templateUrl: './discussion.component.html',
@@ -8,7 +12,39 @@ import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 export class DiscussionComponent implements AfterViewInit {
     @ViewChild('textAreaRef') textAreaRef!: ElementRef;
 
-    constructor() { }
+    private hardCodedMilliseconds: number[] = [
+        5000000000,
+        3000000000,
+        1500000000,
+    ];
+
+    public comments: IComment[] = [
+        {
+            id: uniqid(),
+            username: 'John Doe',
+            avatar: '../../../../../assets/images/svg/avatar-1.svg',
+            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
+            text: 'Incredible article!'
+        },
+        {
+            id: uniqid(),
+            username: 'Steve Peterson',
+            avatar: '../../../../../assets/images/svg/avatar-2.svg',
+            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
+            text: 'Awesome!'
+        },
+        {
+            id: uniqid(),
+            username: 'Brega Hutson',
+            avatar: '../../../../../assets/images/svg/avatar-3.svg',
+            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[2]),
+            text: 'It is so interesting topic to discuss.'
+        }
+    ];
+
+    constructor(
+
+    ) { }
 
     ngAfterViewInit(): void {
         (this.textAreaRef.nativeElement as HTMLElement).focus();

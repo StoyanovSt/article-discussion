@@ -1,4 +1,12 @@
 <div class="component-wrapper">
-    <div class="avatar"></div>
-    <div class="text-container"></div>
+    <div class="avatar">
+        <img [src]="comment?.avatar" alt="">
+    </div>
+    <div class="comment-container">
+        <div class="username-and-timestamp-container">
+            <div class="username">{{comment?.username}}</div>
+            <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
+        </div>
+        <div class="text-container">{{comment?.text}}</div>
+    </div>
 </div>
