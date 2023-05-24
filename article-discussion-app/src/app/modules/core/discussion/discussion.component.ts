@@ -13,9 +13,9 @@ export class DiscussionComponent implements AfterViewInit {
     @ViewChild('textAreaRef') textAreaRef!: ElementRef;
 
     private hardCodedMilliseconds: number[] = [
-        5000000000,
-        3000000000,
         1500000000,
+        3000000000,
+        5000000000,
     ];
 
     public comments: IComment[] = [
