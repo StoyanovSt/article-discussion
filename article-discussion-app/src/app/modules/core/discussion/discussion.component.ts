@@ -24,14 +24,14 @@ export class DiscussionComponent implements AfterViewInit {
             username: 'John Doe',
             avatar: '../../../../../assets/images/svg/avatar-1.svg',
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
-            text: 'Incredible article!'
+            text: `Let's save wild elephants!`
         },
         {
             id: uniqid(),
             username: 'Steve Peterson',
             avatar: '../../../../../assets/images/svg/avatar-2.svg',
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
-            text: 'Awesome!'
+            text: 'Asian elephants are a keystone species and “gardeners of the planet.”'
         },
         {
             id: uniqid(),
