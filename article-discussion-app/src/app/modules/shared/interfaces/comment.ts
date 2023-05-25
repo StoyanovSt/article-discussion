@@ -3,7 +3,7 @@ export interface IComment {
     userId: string,
     username: string,
     avatar: string,
-    timestamp: Date | string,
+    timestamp: Date,
     text: string,
     isDeleted: boolean
 }

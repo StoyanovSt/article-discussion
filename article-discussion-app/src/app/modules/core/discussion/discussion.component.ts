@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 
 import { IComment } from '../../shared/interfaces/comment';
+import CommentsSortingEnumeration from '../../shared/enums/comments-sorting.enum';
 
 import * as uniqid from 'uniqid';
 
@@ -21,6 +22,8 @@ export class DiscussionComponent implements AfterViewInit {
         id: string,
         text: string,
     }[] = [];
+
+    public sortingEnum: typeof CommentsSortingEnumeration = CommentsSortingEnumeration;
 
     public comments: IComment[] = [
         {
@@ -54,7 +57,9 @@ export class DiscussionComponent implements AfterViewInit {
 
     constructor(
 
-    ) { }
+    ) {
+
+    }
 
     ngAfterViewInit(): void {
         (this.textAreaRef.nativeElement as HTMLElement).focus();
@@ -97,7 +102,7 @@ export class DiscussionComponent implements AfterViewInit {
 
     }
 
-    public onRestoreComment(commentId: string): void {        
+    public onRestoreComment(commentId: string): void {
         this.comments.forEach((c: IComment) => {
             if (c.id === commentId) {
                 const deletedComment = this.deletedComments.find(x => x.id === c.id);
@@ -106,11 +111,32 @@ export class DiscussionComponent implements AfterViewInit {
                     c.text = deletedComment.text;
                     c.isDeleted = false;
                     this.deletedComments = this.deletedComments.filter(x => x.id !== c.id);
-                    
+
                 }
 
             }
         });
+    }
+
+    public onSortComments(sortingId: number): void {
+        switch (sortingId) {
+            case 0:
+                //TO DO
+                break;
+            case 1:
+                //TO DO
+                break;
+            case 2:
+                this.comments.sort((a: IComment, b: IComment): number => {
+                    return b.timestamp.toLocaleDateString().localeCompare(a.timestamp.toLocaleDateString());
+                })
+                break;
+            case 3:
+                this.comments.sort((a: IComment, b: IComment): number => {
+                    return a.timestamp.toLocaleDateString().localeCompare(b.timestamp.toLocaleDateString());
+                })
+                break;
+        }
     }
 
 }

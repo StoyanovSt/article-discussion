@@ -12,6 +12,7 @@
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
+  margin-bottom: 1rem;
 }
 .article {
   margin-right: 5rem;
@@ -28,7 +29,6 @@
   border-radius: 1.5rem;
 }
 .comments-section {
-  margin-top: 1rem;
   width: 100%;
 }
 .comment-area {
@@ -43,4 +43,16 @@
 }
 .focused {
   border-bottom-color: #5b5fc7;
+}
+.sorting-panel {
+  max-width: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 2rem;
+  background-color: #fff;
+  border-radius: 4px;
+}
+.sorting-panel img {
+  cursor: pointer;
 }
