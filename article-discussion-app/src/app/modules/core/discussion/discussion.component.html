@@ -1,6 +1,16 @@
 <div class="component-wrapper">
     <h1 class="article-title">Wild Elephants</h1>
-    <div class="article">Too many elephants are getting killed in conflicts with humans! We simply cannot allow them to disappear from the face of this earth. There are less than 40,000 Asian elephants in the world, fully 60% of them, that is 27,000 plus wander in the jungles of India. The problem is, 80% of their habitats have been occupied by people. In other words, people and elephants share 80% of the landmass in India.</div>
+    <div class="article-content">
+        <div class="article">Too many elephants are getting killed in conflicts with humans! We
+            simply cannot allow them
+            to
+            disappear from the face of this earth. There are less than 40,000 Asian elephants in the world, fully 60% of
+            them, that is 27,000 plus wander in the jungles of India. The problem is, 80% of their habitats have been
+            occupied by people. In other words, people and elephants share 80% of the landmass in India.</div>
+        <div class="image-container">
+            <img src="../../../../assets/images/jpg/wild-elephants.jpg" alt="Wild elephants">
+        </div>
+    </div>
     <div class="comments-section">
         <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
     </div>
