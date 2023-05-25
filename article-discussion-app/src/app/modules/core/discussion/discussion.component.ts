@@ -59,6 +59,16 @@ export class DiscussionComponent implements AfterViewInit {
     }
 
     public onLeavingAComment(): void {
+        const comment: IComment = {
+            id: uniqid(),
+            username: '',
+            avatar: '../../../../../assets/images/svg/avatar-4.svg',
+            timestamp: new Date(),
+            text: String(this.textAreaRef.nativeElement.value).trim()
+        }
+
+        this.comments.push(comment);
+        this.textAreaRef.nativeElement.value = '';
     }
 
 }

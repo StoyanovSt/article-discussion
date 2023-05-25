@@ -4,7 +4,7 @@
     </div>
     <div class="comment-container">
         <div class="username-and-timestamp-container">
-            <div class="username">{{comment?.username}}</div>
+            <div *ngIf="comment.username" class="username">{{comment.username}}</div>
             <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
         </div>
         <div class="text-container">{{comment?.text}}</div>
