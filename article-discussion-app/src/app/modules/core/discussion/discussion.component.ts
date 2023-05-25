@@ -34,6 +34,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
             text: `Let's save wild elephants!`,
             isDeleted: false,
+            replies: []
         },
         {
             id: uniqid(),
@@ -43,6 +44,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
             text: 'Asian elephants are a keystone species and “gardeners of the planet.”',
             isDeleted: false,
+            replies: []
         },
         {
             id: uniqid(),
@@ -52,6 +54,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[2]),
             text: 'It is so interesting topic to discuss.',
             isDeleted: false,
+            replies: []
         }
     ];
 
@@ -82,6 +85,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(),
             text: String(this.textAreaRef.nativeElement.value).trim(),
             isDeleted: false,
+            replies: []
         }
 
         this.comments.push(comment);
@@ -121,22 +125,54 @@ export class DiscussionComponent implements AfterViewInit {
     public onSortComments(sortingId: number): void {
         switch (sortingId) {
             case 0:
-                //TO DO
+                this.sortCommentsByRepliesAsc();
                 break;
             case 1:
-                //TO DO
+                this.sortCommentsByRepliesDesc();
                 break;
             case 2:
-                this.comments.sort((a: IComment, b: IComment): number => {
-                    return b.timestamp.toLocaleDateString().localeCompare(a.timestamp.toLocaleDateString());
-                })
+                this.sortCommentsByDateAsc();
                 break;
             case 3:
-                this.comments.sort((a: IComment, b: IComment): number => {
-                    return a.timestamp.toLocaleDateString().localeCompare(b.timestamp.toLocaleDateString());
-                })
+                this.sortCommentsByDateDesc();
                 break;
         }
+    }
+
+    private sortCommentsByRepliesAsc(): void {
+        this.comments.sort((a: IComment, b: IComment): number => {
+            if (a.replies.length > b.replies.length) {
+                return 1;
+            } else if (b.replies.length > a.replies.length) {
+                return -1;
+            }
+
+            return 0;
+        })
+    }
+
+    private sortCommentsByRepliesDesc(): void {
+        this.comments.sort((a: IComment, b: IComment): number => {
+            if (b.replies.length > a.replies.length) {
+                return 1;
+            } else if (a.replies.length > b.replies.length) {
+                return -1;
+            }
+
+            return 0;
+        })
+    }
+
+    private sortCommentsByDateAsc(): void {
+        this.comments.sort((a: IComment, b: IComment): number => {
+            return a.timestamp.toLocaleDateString().localeCompare(b.timestamp.toLocaleDateString());
+        })
+    }
+
+    private sortCommentsByDateDesc(): void {
+        this.comments.sort((a: IComment, b: IComment): number => {
+            return b.timestamp.toLocaleDateString().localeCompare(a.timestamp.toLocaleDateString());
+        })
     }
 
 }

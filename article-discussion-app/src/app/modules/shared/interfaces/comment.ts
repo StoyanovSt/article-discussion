@@ -5,5 +5,6 @@ export interface IComment {
     avatar: string,
     timestamp: Date,
     text: string,
-    isDeleted: boolean
+    isDeleted: boolean,
+    replies: IComment[]
 }
