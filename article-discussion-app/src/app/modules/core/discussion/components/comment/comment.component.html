@@ -6,10 +6,19 @@
         <div class="username-and-timestamp-container">
             <div *ngIf="comment.username" class="username">{{comment.username}}</div>
             <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
-            <div *ngIf="showOptionsMenu" class="options-menu">
-                <img src="../../../../../../assets/images/jpg/options-menu.jpg" alt="options-menu-icon">
+            <div [matMenuTriggerFor]="appMenu" #optionsMenuIconRef class="options-menu-icon">
+                <img src="../../../../../../assets/images/jpg/options-menu-icon.jpg" alt="options-menu-icon">
             </div>
+            <mat-menu #appMenu="matMenu">
+                <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn" (click)="onDeleteComment(comment.id)">
+                    <img src="../../../../../../assets/images/svg/delete-btn.svg" />
+                    <div class="menu-btn-text-wrapper">Delete
+                        comment</div>
+                </button>
+            </mat-menu>
         </div>
-        <div class="text-container">{{comment?.text}}</div>
+        <div class="text-container">{{comment?.text}} 
+            <button *ngIf="comment?.isDeleted" class="undo-btn" (click)="onRestoreComment(comment.id)">Undo</button>
+        </div>
     </div>
 </div>

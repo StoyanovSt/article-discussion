@@ -12,7 +12,7 @@
         </div>
     </div>
     <div class="comments-section">
-        <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+        <app-comment *ngFor="let comment of comments" [comment]="comment" (commentIdEmmitter)="onDeleteComment($event)" (deletedCommentIdEmmitter)="onRestoreComment($event)"></app-comment>
     </div>
     <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef
         (focusin)="onFocusInTextArea(textAreaRef)" (focusout)="onFocusOutTextArea(textAreaRef)"

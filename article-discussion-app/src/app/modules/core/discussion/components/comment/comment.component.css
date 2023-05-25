@@ -40,14 +40,38 @@
 .text-container {
   word-break: break-all;
 }
-.options-menu {
+.options-menu-icon {
   position: absolute;
   right: -1rem;
   top: -1.85rem;
   cursor: pointer;
+  display: none;
 }
-.options-menu img {
+.options-menu-icon img {
   border-radius: 0.375rem;
   max-height: 1.7rem;
   box-shadow: 1px 2px 4px 2px gainsboro;
+}
+.menu-btn {
+  display: flex;
+  align-items: center;
+}
+.menu-btn-text-wrapper {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+}
+.undo-btn {
+  margin-left: 0.5rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #5b5fc7;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+.undo-btn:hover {
+  text-decoration: underline;
 }
