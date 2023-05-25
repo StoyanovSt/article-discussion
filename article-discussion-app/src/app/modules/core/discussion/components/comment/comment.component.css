@@ -75,3 +75,12 @@
 .undo-btn:hover {
   text-decoration: underline;
 }
+@media (max-width: 480px) {
+  .username-and-timestamp-container {
+    flex-wrap: wrap;
+  }
+  .comment-timestamp {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+}

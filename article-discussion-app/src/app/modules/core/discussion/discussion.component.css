@@ -21,7 +21,6 @@
 }
 .article-content .image-container {
   max-width: 25rem;
-  min-width: 25rem;
 }
 .article-content .image-container img {
   width: 100%;
@@ -52,7 +51,14 @@
   padding: 0.75rem 2rem;
   background-color: #fff;
   border-radius: 4px;
+  margin-top: 4rem;
 }
 .sorting-panel img {
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .article {
+    margin-right: 2rem;
+  }
 }
