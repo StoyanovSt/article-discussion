@@ -6,5 +6,6 @@ export interface IComment {
     timestamp: Date,
     text: string,
     isDeleted: boolean,
+    isEdited: boolean,
     replies: IComment[]
 }

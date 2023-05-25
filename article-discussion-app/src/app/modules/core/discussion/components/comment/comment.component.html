@@ -6,6 +6,7 @@
         <div class="username-and-timestamp-container">
             <div *ngIf="comment.username" class="username">{{comment.username}}</div>
             <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
+            <div *ngIf="comment.isEdited" class="edited-label">Edited</div>
             <div [matMenuTriggerFor]="appMenu" #optionsMenuIconRef class="options-menu-icon">
                 <img src="../../../../../../assets/images/jpg/options-menu-icon.jpg" alt="options-menu-icon">
             </div>
@@ -13,6 +14,11 @@
                 <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn" (click)="onDeleteComment(comment.id)">
                     <img src="../../../../../../assets/images/svg/delete-btn.svg" />
                     <div class="menu-btn-text-wrapper">Delete
+                        comment</div>
+                </button>
+                <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn" (click)="onEditComment(comment.id)">
+                    <img src="../../../../../../assets/images/svg/edit-btn.svg" />
+                    <div class="menu-btn-text-wrapper">Edit
                         comment</div>
                 </button>
             </mat-menu>

@@ -11,6 +11,7 @@ export class CommentComponent implements AfterViewInit {
     @Input() comment!: IComment;
     @Output() commentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
     @Output() deletedCommentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
+    @Output() editCommentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
     @ViewChild('commentRef') commentRef!: ElementRef;
     @ViewChild('optionsMenuIconRef') optionsMenuIconRef!: ElementRef;
 
@@ -38,6 +39,10 @@ export class CommentComponent implements AfterViewInit {
     }
 
     public onRestoreComment(commentId: string): void {
-        this.deletedCommentIdEmmitter.emit(commentId);        
+        this.deletedCommentIdEmmitter.emit(commentId);
+    }
+
+    public onEditComment(commentId: string): void {
+        this.editCommentIdEmmitter.emit(commentId);
     }
 }

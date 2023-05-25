@@ -37,6 +37,12 @@
   font-weight: 600;
   margin-right: 1rem;
 }
+.username-and-timestamp-container .comment-timestamp {
+  margin-right: 0.5rem;
+}
+.edited-label {
+  font-weight: 600;
+}
 .text-container {
   word-break: break-all;
 }
@@ -75,6 +81,7 @@
 .undo-btn:hover {
   text-decoration: underline;
 }
+
 @media (max-width: 480px) {
   .username-and-timestamp-container {
     flex-wrap: wrap;

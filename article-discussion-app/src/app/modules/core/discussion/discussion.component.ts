@@ -22,6 +22,7 @@ export class DiscussionComponent implements AfterViewInit {
         id: string,
         text: string,
     }[] = [];
+    private commentForEditing!: IComment;
 
     public sortingEnum: typeof CommentsSortingEnumeration = CommentsSortingEnumeration;
 
@@ -34,6 +35,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
             text: `Let's save wild elephants!`,
             isDeleted: false,
+            isEdited: false,
             replies: []
         },
         {
@@ -44,6 +46,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
             text: 'Asian elephants are a keystone species and “gardeners of the planet.”',
             isDeleted: false,
+            isEdited: false,
             replies: []
         },
         {
@@ -54,6 +57,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[2]),
             text: 'It is so interesting topic to discuss.',
             isDeleted: false,
+            isEdited: false,
             replies: []
         }
     ];
@@ -76,7 +80,26 @@ export class DiscussionComponent implements AfterViewInit {
         (textAreaRef as HTMLElement).classList.remove('focused');
     }
 
-    public onLeavingAComment(): void {
+    public onPushComment(): void {
+        let isCommentAlreadyExists = false;
+
+        for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].id === this.commentForEditing?.id) {
+                this.comments[i] = {
+                    ...this.comments[i],
+                    text: String(this.textAreaRef.nativeElement.value).trim(),
+                    isEdited: true
+                };
+
+                isCommentAlreadyExists = true;
+            }
+        }
+
+        if (isCommentAlreadyExists) {
+            this.textAreaRef.nativeElement.value = '';
+            return;
+        }
+
         const comment: IComment = {
             id: uniqid(),
             userId: 'pd-12-4',
@@ -85,6 +108,7 @@ export class DiscussionComponent implements AfterViewInit {
             timestamp: new Date(),
             text: String(this.textAreaRef.nativeElement.value).trim(),
             isDeleted: false,
+            isEdited: false,
             replies: []
         }
 
@@ -120,6 +144,17 @@ export class DiscussionComponent implements AfterViewInit {
 
             }
         });
+    }
+
+    public onEditComment(commentId: string): void {
+        const comment = this.comments.find((c: IComment) => c.id === commentId);
+
+        if (comment) {
+            this.textAreaRef.nativeElement.focus();
+            this.textAreaRef.nativeElement.value = comment.text;
+
+            this.commentForEditing = comment;
+        }
     }
 
     public onSortComments(sortingId: number): void {
