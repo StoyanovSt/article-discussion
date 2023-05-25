@@ -1,7 +1,8 @@
 .component-wrapper {
   display: flex;
   align-items: center;
-  margin: 1.5rem 0;
+  margin: 3rem 0;
+  width: fit-content;
 }
 .avatar {
   min-width: 3rem;
@@ -30,6 +31,7 @@
 .username-and-timestamp-container {
   display: flex;
   align-items: center;
+  position: relative;
 }
 .username-and-timestamp-container .username {
   font-weight: 600;
@@ -37,4 +39,15 @@
 }
 .text-container {
   word-break: break-all;
+}
+.options-menu {
+  position: absolute;
+  right: -1rem;
+  top: -1.85rem;
+  cursor: pointer;
+}
+.options-menu img {
+  border-radius: 0.375rem;
+  max-height: 1.7rem;
+  box-shadow: 1px 2px 4px 2px gainsboro;
 }

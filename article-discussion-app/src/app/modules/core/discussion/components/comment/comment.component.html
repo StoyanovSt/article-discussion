@@ -1,4 +1,4 @@
-<div class="component-wrapper">
+<div class="component-wrapper" #commentRef>
     <div class="avatar">
         <img [src]="comment?.avatar" alt="">
     </div>
@@ -6,6 +6,9 @@
         <div class="username-and-timestamp-container">
             <div *ngIf="comment.username" class="username">{{comment.username}}</div>
             <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
+            <div *ngIf="showOptionsMenu" class="options-menu">
+                <img src="../../../../../../assets/images/jpg/options-menu.jpg" alt="options-menu-icon">
+            </div>
         </div>
         <div class="text-container">{{comment?.text}}</div>
     </div>
