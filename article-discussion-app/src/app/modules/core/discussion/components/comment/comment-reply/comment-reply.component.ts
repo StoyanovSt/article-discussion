@@ -16,6 +16,7 @@ export class CommentReplyComponent implements AfterViewInit {
     @ViewChild('optionsMenuIconRef') optionsMenuIconRef!: ElementRef;
 
     public CLIENT_ID: string = 'pd-12-4';
+    public CLIENT_HEAD_COMMENT_ID: string = 'rq-5-fe434';
 
     ngAfterViewInit(): void {
         const commentElement = this.commentRef.nativeElement as HTMLElement;

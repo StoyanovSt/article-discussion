@@ -4,7 +4,9 @@
     </div>
     <div class="comment-container">
         <div class="username-and-timestamp-container">
-            <div class="username">{{comment?.username}}</div>
+            <div class="username">{{comment?.username}} <span
+                    *ngIf="comment?.parentCommentId === CLIENT_HEAD_COMMENT_ID" class="author-label">/author/</span>
+            </div>
             <div class="label-wrapper">
                 <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
                 <div *ngIf="comment?.isEdited" class="edited-label">Edited</div>

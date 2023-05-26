@@ -39,6 +39,10 @@
   font-weight: 600;
   margin-right: 3.5rem;
 }
+.author-label {
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+}
 .label-wrapper {
   display: flex;
   align-items: center;

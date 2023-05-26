@@ -13,12 +13,18 @@ import * as uniqid from 'uniqid';
 export class DiscussionComponent implements AfterViewInit {
     @ViewChild('textAreaRef') textAreaRef!: ElementRef;
 
-    private hardCodedMilliseconds: number[] = [
+    private hardcodedMilliseconds: number[] = [
         1500000000,
         3000000000,
         5000000000,
         60000000,
         4000000,
+    ];
+    private hardcodedHeadCommentsIds: string[] = [
+        'rx-2-fe432',
+        'rx-3-fe435',
+        'ry-4-fe437',
+        'rq-5-fe434',
     ];
     private deletedComments: {
         id: string,
@@ -31,11 +37,11 @@ export class DiscussionComponent implements AfterViewInit {
 
     public comments: IComment[] = [
         {
-            id: uniqid(),
+            id: this.hardcodedHeadCommentsIds[0],
             userId: 'pd-12-1',
             username: 'John Doe:',
             avatar: '../../../../../assets/images/svg/avatar-1.svg',
-            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
+            timestamp: new Date(Date.now() - this.hardcodedMilliseconds[0]),
             text: `Let's save wild elephants!`,
             isDeleted: false,
             isEdited: false,
@@ -44,7 +50,7 @@ export class DiscussionComponent implements AfterViewInit {
                 userId: 'pd-12-2',
                 username: 'Steve Peterson:',
                 avatar: '../../../../../assets/images/svg/avatar-2.svg',
-                timestamp: new Date(Date.now() - this.hardCodedMilliseconds[3]),
+                timestamp: new Date(Date.now() - this.hardcodedMilliseconds[3]),
                 text: 'Yeah!',
                 isDeleted: false,
                 isEdited: false,
@@ -54,7 +60,7 @@ export class DiscussionComponent implements AfterViewInit {
                 userId: 'pd-12-3',
                 username: 'Brega Hutson:',
                 avatar: '../../../../../assets/images/svg/avatar-3.svg',
-                timestamp: new Date(Date.now() - this.hardCodedMilliseconds[4]),
+                timestamp: new Date(Date.now() - this.hardcodedMilliseconds[4]),
                 text: 'Alright!',
                 isDeleted: false,
                 isEdited: false,
@@ -62,22 +68,22 @@ export class DiscussionComponent implements AfterViewInit {
             }]
         },
         {
-            id: uniqid(),
+            id: this.hardcodedHeadCommentsIds[1],
             userId: 'pd-12-2',
             username: 'Steve Peterson:',
             avatar: '../../../../../assets/images/svg/avatar-2.svg',
-            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
+            timestamp: new Date(Date.now() - this.hardcodedMilliseconds[1]),
             text: 'Asian elephants are a keystone species and “gardeners of the planet.”',
             isDeleted: false,
             isEdited: false,
             replies: []
         },
         {
-            id: uniqid(),
+            id: this.hardcodedHeadCommentsIds[2],
             userId: 'pd-12-3',
             username: 'Brega Hutson:',
             avatar: '../../../../../assets/images/svg/avatar-3.svg',
-            timestamp: new Date(Date.now() - this.hardCodedMilliseconds[2]),
+            timestamp: new Date(Date.now() - this.hardcodedMilliseconds[2]),
             text: 'It is so interesting topic to discuss.',
             isDeleted: false,
             isEdited: false,
@@ -114,7 +120,7 @@ export class DiscussionComponent implements AfterViewInit {
             //reply to comment
             this.comments.forEach((c: IComment) => {
                 if (c.id === this.commentForReplying?.id) {
-                    c.replies.push(this.createAReplyComment());
+                    c.replies.push(this.createAReplyComment(c.id));
                     this.clearCommentTextArea();
                 }
             });
@@ -318,7 +324,7 @@ export class DiscussionComponent implements AfterViewInit {
 
     private postNewComment(): void {
         const comment: IComment = {
-            id: uniqid(),
+            id: this.hardcodedHeadCommentsIds[3],
             userId: 'pd-12-4',
             username: 'Me:',
             avatar: '../../../../../assets/images/svg/avatar-4.svg',
@@ -336,10 +342,12 @@ export class DiscussionComponent implements AfterViewInit {
         this.textAreaRef.nativeElement.value = '';
     }
 
-    private createAReplyComment(): IComment {
+    private createAReplyComment(parentCommentId: string): IComment {
         return {
             id: uniqid(),
             userId: 'pd-12-4',
+            parentCommentId,
+            isReplyComment: true,
             username: 'Me:',
             avatar: '../../../../../assets/images/svg/avatar-4.svg',
             timestamp: new Date(),
