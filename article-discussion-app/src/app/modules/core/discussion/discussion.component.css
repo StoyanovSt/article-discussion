@@ -26,9 +26,14 @@
   width: 100%;
   object-fit: cover;
   border-radius: 1.5rem;
+  box-shadow: 4px 4px 6px 4px gainsboro;
 }
 .comments-section {
   width: 100%;
+  padding: 0rem 1.5rem 5rem 1.5rem;
+  border-radius: 1.5rem;
+  margin-top: 1.5rem;
+  background-color: aliceblue;
 }
 .comment-area {
   width: 100%;
@@ -39,6 +44,7 @@
   border-radius: 0.25rem;
   padding: 1rem;
   margin-top: 3.75rem;
+  box-shadow: 4px 4px 6px -2px gainsboro;
 }
 .focused {
   border-bottom-color: #5b5fc7;
@@ -52,6 +58,7 @@
   background-color: #fff;
   border-radius: 4px;
   margin-top: 4rem;
+  box-shadow: 4px 4px 6px -2px gainsboro;
 }
 .sorting-panel img {
   cursor: pointer;
