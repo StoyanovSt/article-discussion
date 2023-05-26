@@ -30,10 +30,25 @@
 }
 .comments-section {
   width: 100%;
-  padding: 0rem 1.5rem 5rem 1.5rem;
+  padding: 0rem 1.5rem 3.5rem 1.5rem;
   border-radius: 1.5rem;
   margin-top: 1.5rem;
   background-color: aliceblue;
+}
+.comment-area-wrapper {
+  margin-top: 5rem;
+  position: relative;
+}
+.empty-string-alert-message {
+  position: absolute;
+  top: -1.5rem;
+  width: 100%;
+  height: 1.5rem;
+  background-color: #e6e6e6;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  font-size: 0.8rem;
+  padding: 0.25rem 1rem;
 }
 .comment-area {
   width: 100%;
@@ -43,7 +58,6 @@
   outline: none;
   border-radius: 0.25rem;
   padding: 1rem;
-  margin-top: 3.75rem;
   box-shadow: 4px 4px 6px -2px gainsboro;
 }
 .focused {

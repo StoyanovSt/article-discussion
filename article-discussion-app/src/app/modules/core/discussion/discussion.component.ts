@@ -90,6 +90,7 @@ export class DiscussionComponent implements AfterViewInit {
             replies: []
         }
     ];
+    public isInvalidComment: boolean = false;
 
     constructor(
 
@@ -113,6 +114,11 @@ export class DiscussionComponent implements AfterViewInit {
         //if user tries to enter an empty string
         if (!this.getCommentTextAreaValue()) {
             this.clearCommentTextArea();
+            this.isInvalidComment = true;
+
+            setTimeout(() => {
+                this.isInvalidComment = false;
+            }, 3000);
             return;
         }
 

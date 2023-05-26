@@ -41,10 +41,14 @@
     </div>
     <div class="comments-section">
         <app-comment *ngFor="let comment of comments" [comment]="comment" (commentIdEmmitter)="onDeleteComment($event)"
-            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)" (replyCommentIdEmmitter)="onReplyToComment($event)" >
+            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)"
+            (replyCommentIdEmmitter)="onReplyToComment($event)">
         </app-comment>
     </div>
-    <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef
-        (focusin)="onFocusInTextArea(textAreaRef)" (focusout)="onFocusOutTextArea(textAreaRef)"
-        (keyup.enter)="onPushComment()"></textarea>
+    <div class="comment-area-wrapper">
+        <div *ngIf="isInvalidComment" class="empty-string-alert-message">Please leave a comment to continue.</div>
+        <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef
+            (focusin)="onFocusInTextArea(textAreaRef)" (focusout)="onFocusOutTextArea(textAreaRef)"
+            (keyup.enter)="onPushComment()"></textarea>
+    </div>
 </div>
