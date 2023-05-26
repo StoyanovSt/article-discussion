@@ -1,8 +1,9 @@
 .component-wrapper {
   display: flex;
   align-items: center;
-  margin: 4rem 0rem 1.5rem 0rem;
+  margin: 1.5rem 0rem;
   width: fit-content;
+  padding-left: 2rem;
 }
 .avatar {
   min-width: 3rem;

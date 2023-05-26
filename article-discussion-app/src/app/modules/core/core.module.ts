@@ -6,11 +6,13 @@ import { MatMenuModule } from '@angular/material/menu';
 
 import { DiscussionComponent } from './discussion/discussion.component';
 import { CommentComponent } from './discussion/components/comment/comment.component';
+import { CommentReplyComponent } from './discussion/components/comment/comment-reply/comment-reply.component';
 
 @NgModule({
     declarations: [
         DiscussionComponent,
-        CommentComponent
+        CommentComponent,
+        CommentReplyComponent
     ],
     imports: [
         CommonModule,
@@ -19,7 +21,8 @@ import { CommentComponent } from './discussion/components/comment/comment.compon
     ],
     exports: [
         DiscussionComponent,
-        CommentComponent
+        CommentComponent,
+        CommentReplyComponent
     ]
 })
 export class CoreModule { }

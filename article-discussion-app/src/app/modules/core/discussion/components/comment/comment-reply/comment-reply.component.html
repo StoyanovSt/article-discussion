@@ -9,25 +9,20 @@
                 <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
                 <div *ngIf="comment?.isEdited" class="edited-label">Edited</div>
             </div>
-            <div [matMenuTriggerFor]="appMenu" #optionsMenuIconRef class="options-menu-icon">
+            <div *ngIf="comment?.userId === CLIENT_ID" [matMenuTriggerFor]="appMenu" #optionsMenuIconRef
+                class="options-menu-icon">
                 <img src="../../../../../../assets/images/svg/three-dots.svg" alt="options-menu-icon">
             </div>
             <mat-menu #appMenu="matMenu">
-                <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn"
-                    (click)="onDeleteComment(comment.id)">
+                <button mat-menu-item class="menu-btn" (click)="onDeleteComment(comment.id)">
                     <img src="../../../../../../assets/images/svg/delete-btn-icon.svg" />
                     <div class="menu-btn-text-wrapper">Delete
                         comment</div>
                 </button>
-                <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn"
-                    (click)="onEditComment(comment.id)">
+                <button mat-menu-item class="menu-btn" (click)="onEditComment(comment.id)">
                     <img src="../../../../../../assets/images/svg/edit-btn-icon.svg" />
                     <div class="menu-btn-text-wrapper">Edit
                         comment</div>
-                </button>
-                <button mat-menu-item class="menu-btn" (click)="onReplyToComment(comment.id)">
-                    <img src="../../../../../../assets/images/svg/reply-btn-icon.svg" />
-                    <div class="menu-btn-text-wrapper">Reply to comment</div>
                 </button>
             </mat-menu>
         </div>
@@ -36,7 +31,3 @@
         </div>
     </div>
 </div>
-<app-comment-reply *ngFor="let reply of comment?.replies" [comment]="reply"
-    (commentIdEmmitter)="onDeleteComment($event)" (deletedCommentIdEmmitter)="onRestoreComment($event)"
-    (editCommentIdEmmitter)="onEditComment($event)">
-</app-comment-reply>

@@ -3,16 +3,15 @@ import { AfterViewInit, Component, ElementRef, Input, ViewChild, EventEmitter, O
 import { IComment } from 'src/app/modules/shared/interfaces/comment';
 
 @Component({
-    selector: 'app-comment',
-    templateUrl: './comment.component.html',
-    styleUrls: ['./comment.component.css']
+    selector: 'app-comment-reply',
+    templateUrl: './comment-reply.component.html',
+    styleUrls: ['./comment-reply.component.css']
 })
-export class CommentComponent implements AfterViewInit {
+export class CommentReplyComponent implements AfterViewInit {
     @Input() comment!: IComment;
     @Output() commentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
     @Output() deletedCommentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
     @Output() editCommentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
-    @Output() replyCommentIdEmmitter: EventEmitter<string> = new EventEmitter<string>();
     @ViewChild('commentRef') commentRef!: ElementRef;
     @ViewChild('optionsMenuIconRef') optionsMenuIconRef!: ElementRef;
 
@@ -20,18 +19,25 @@ export class CommentComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         const commentElement = this.commentRef.nativeElement as HTMLElement;
-        const optionsMenuIconElement = this.optionsMenuIconRef.nativeElement as HTMLElement;
+        const optionsMenuIconElement = this.optionsMenuIconRef?.nativeElement as HTMLElement;
 
-        commentElement.onmouseenter = (): void => {
-            //do not show menu icon when comment is deleted
-            if (this.comment.isDeleted === false) {
-                optionsMenuIconElement.style.display = "block";
+        if (commentElement) {
+            commentElement.onmouseenter = (): void => {
+                //do not show menu icon when comment is deleted
+                if (this.comment.isDeleted === false) {
+                    if (optionsMenuIconElement) {
+                        optionsMenuIconElement.style.display = "block";
+                    }
+                }
+            }
+
+            commentElement.onmouseleave = (): void => {
+                if (optionsMenuIconElement) {
+                    optionsMenuIconElement.style.display = "none";
+                }
             }
         }
 
-        commentElement.onmouseleave = (): void => {
-            optionsMenuIconElement.style.display = "none";
-        }
     }
 
     public onDeleteComment(commentId: string): void {
@@ -44,9 +50,5 @@ export class CommentComponent implements AfterViewInit {
 
     public onEditComment(commentId: string): void {
         this.editCommentIdEmmitter.emit(commentId);
-    }
-
-    public onReplyToComment(commentId: string): void {
-        this.replyCommentIdEmmitter.emit(commentId);
     }
 }

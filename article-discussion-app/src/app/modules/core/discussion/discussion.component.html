@@ -41,7 +41,7 @@
     </div>
     <div class="comments-section">
         <app-comment *ngFor="let comment of comments" [comment]="comment" (commentIdEmmitter)="onDeleteComment($event)"
-            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)">
+            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)" (replyCommentIdEmmitter)="onReplyToComment($event)" >
         </app-comment>
     </div>
     <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef

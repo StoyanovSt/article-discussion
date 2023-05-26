@@ -17,12 +17,15 @@ export class DiscussionComponent implements AfterViewInit {
         1500000000,
         3000000000,
         5000000000,
+        60000000,
+        4000000,
     ];
     private deletedComments: {
         id: string,
         text: string,
     }[] = [];
-    private commentForEditing!: IComment;
+    private commentForEditing: IComment | undefined;
+    private commentForReplying: IComment | undefined;
 
     public sortingEnum: typeof CommentsSortingEnumeration = CommentsSortingEnumeration;
 
@@ -30,18 +33,38 @@ export class DiscussionComponent implements AfterViewInit {
         {
             id: uniqid(),
             userId: 'pd-12-1',
-            username: 'John Doe',
+            username: 'John Doe:',
             avatar: '../../../../../assets/images/svg/avatar-1.svg',
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[0]),
             text: `Let's save wild elephants!`,
             isDeleted: false,
             isEdited: false,
-            replies: []
+            replies: [{
+                id: uniqid(),
+                userId: 'pd-12-2',
+                username: 'Steve Peterson:',
+                avatar: '../../../../../assets/images/svg/avatar-2.svg',
+                timestamp: new Date(Date.now() - this.hardCodedMilliseconds[3]),
+                text: 'Yeah!',
+                isDeleted: false,
+                isEdited: false,
+                replies: []
+            }, {
+                id: uniqid(),
+                userId: 'pd-12-3',
+                username: 'Brega Hutson:',
+                avatar: '../../../../../assets/images/svg/avatar-3.svg',
+                timestamp: new Date(Date.now() - this.hardCodedMilliseconds[4]),
+                text: 'Alright!',
+                isDeleted: false,
+                isEdited: false,
+                replies: []
+            }]
         },
         {
             id: uniqid(),
             userId: 'pd-12-2',
-            username: 'Steve Peterson',
+            username: 'Steve Peterson:',
             avatar: '../../../../../assets/images/svg/avatar-2.svg',
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[1]),
             text: 'Asian elephants are a keystone species and “gardeners of the planet.”',
@@ -52,7 +75,7 @@ export class DiscussionComponent implements AfterViewInit {
         {
             id: uniqid(),
             userId: 'pd-12-3',
-            username: 'Brega Hutson',
+            username: 'Brega Hutson:',
             avatar: '../../../../../assets/images/svg/avatar-3.svg',
             timestamp: new Date(Date.now() - this.hardCodedMilliseconds[2]),
             text: 'It is so interesting topic to discuss.',
@@ -81,39 +104,72 @@ export class DiscussionComponent implements AfterViewInit {
     }
 
     public onPushComment(): void {
-        let isCommentAlreadyExists = false;
-
-        for (let i = 0; i < this.comments.length; i++) {
-            if (this.comments[i].id === this.commentForEditing?.id) {
-                this.comments[i] = {
-                    ...this.comments[i],
-                    text: String(this.textAreaRef.nativeElement.value).trim(),
-                    isEdited: true
-                };
-
-                isCommentAlreadyExists = true;
-            }
-        }
-
-        if (isCommentAlreadyExists) {
-            this.textAreaRef.nativeElement.value = '';
+        //if user tries to enter an empty string
+        if (!this.getCommentTextAreaValue()) {
+            this.clearCommentTextArea();
             return;
         }
 
-        const comment: IComment = {
-            id: uniqid(),
-            userId: 'pd-12-4',
-            username: '',
-            avatar: '../../../../../assets/images/svg/avatar-4.svg',
-            timestamp: new Date(),
-            text: String(this.textAreaRef.nativeElement.value).trim(),
-            isDeleted: false,
-            isEdited: false,
-            replies: []
+        if (this.commentForReplying?.id) {
+            //reply to comment
+            this.comments.forEach((c: IComment) => {
+                if (c.id === this.commentForReplying?.id) {
+                    c.replies.push(this.createAReplyComment());
+                    this.clearCommentTextArea();
+                }
+            });
+            this.commentForReplying = undefined;
+            return;
         }
 
-        this.comments.push(comment);
-        this.textAreaRef.nativeElement.value = '';
+        let isCommentEdited = false;
+
+        for (let i = 0; i < this.comments.length; i++) {
+            if (this.comments[i].id === this.commentForEditing?.id) {
+                //edit comment
+                this.comments[i] = {
+                    ...this.comments[i],
+                    text: this.getCommentTextAreaValue(),
+                    isEdited: true
+                };
+
+                isCommentEdited = true;
+                this.commentForEditing = undefined;
+                break;
+            }
+
+            if (this.comments[i].replies.length > 0) {
+                for (let j = 0; j < this.comments[i].replies.length; j++) {
+                    if (this.comments[i].replies[j].id === this.commentForEditing?.id) {
+                        //edit reply comment
+                        this.comments[i].replies[j] = {
+                            ...this.comments[i].replies[j],
+                            text: this.getCommentTextAreaValue(),
+                            isEdited: true
+                        };
+
+                        isCommentEdited = true;
+                        this.commentForEditing = undefined;
+                        break;
+                    }
+                }
+
+                if (isCommentEdited) {
+                    break;
+                }
+            }
+
+        }
+
+        if (isCommentEdited) {
+            this.clearCommentTextArea();
+            return;
+        }
+
+        //if comment is newly created
+        this.postNewComment();
+
+        this.clearCommentTextArea();
     }
 
     public onDeleteComment(commentId: string): void {
@@ -125,7 +181,21 @@ export class DiscussionComponent implements AfterViewInit {
                 });
                 c.text = 'This message has been deleted.';
                 c.isDeleted = true;
+                return;
             }
+
+            c.replies.forEach((reply: IComment) => {
+                if (reply.id === commentId) {
+                    this.deletedComments.push({
+                        id: reply.id,
+                        text: reply.text,
+                    });
+                    reply.text = 'This message has been deleted.';
+                    reply.isDeleted = true;
+                    return;
+                }
+            });
+
         });
 
     }
@@ -139,22 +209,58 @@ export class DiscussionComponent implements AfterViewInit {
                     c.text = deletedComment.text;
                     c.isDeleted = false;
                     this.deletedComments = this.deletedComments.filter(x => x.id !== c.id);
-
+                    return;
                 }
 
             }
+
+            c.replies.forEach((reply: IComment) => {
+                if (reply.id === commentId) {
+                    const deletedComment = this.deletedComments.find(x => x.id === reply.id);
+
+                    if (deletedComment) {
+                        reply.text = deletedComment.text;
+                        reply.isDeleted = false;
+                        this.deletedComments = this.deletedComments.filter(x => x.id !== reply.id);
+                        return;
+                    }
+                }
+            });
+
         });
     }
 
     public onEditComment(commentId: string): void {
+        let comment;
+
+        this.comments.forEach((c: IComment) => {
+            if (c.id === commentId) {
+                comment = c;
+                this.focusCommentTextArea(comment);
+                this.commentForEditing = comment;
+                return;
+            }
+
+            comment = c.replies.find((reply: IComment) => reply.id === commentId);
+
+            if (comment) {
+                this.focusCommentTextArea(comment);
+                this.commentForEditing = comment;
+                return;
+            }
+
+        });
+
+    }
+
+    public onReplyToComment(commentId: string): void {
         const comment = this.comments.find((c: IComment) => c.id === commentId);
 
         if (comment) {
+            this.commentForReplying = comment;
             this.textAreaRef.nativeElement.focus();
-            this.textAreaRef.nativeElement.value = comment.text;
-
-            this.commentForEditing = comment;
         }
+
     }
 
     public onSortComments(sortingId: number): void {
@@ -208,6 +314,53 @@ export class DiscussionComponent implements AfterViewInit {
         this.comments.sort((a: IComment, b: IComment): number => {
             return b.timestamp.toLocaleDateString().localeCompare(a.timestamp.toLocaleDateString());
         })
+    }
+
+    private postNewComment(): void {
+        const comment: IComment = {
+            id: uniqid(),
+            userId: 'pd-12-4',
+            username: 'Me:',
+            avatar: '../../../../../assets/images/svg/avatar-4.svg',
+            timestamp: new Date(),
+            text: this.getCommentTextAreaValue(),
+            isDeleted: false,
+            isEdited: false,
+            replies: []
+        }
+
+        this.comments.push(comment);
+    }
+
+    private clearCommentTextArea(): void {
+        this.textAreaRef.nativeElement.value = '';
+    }
+
+    private createAReplyComment(): IComment {
+        return {
+            id: uniqid(),
+            userId: 'pd-12-4',
+            username: 'Me:',
+            avatar: '../../../../../assets/images/svg/avatar-4.svg',
+            timestamp: new Date(),
+            text: this.getCommentTextAreaValue(),
+            isDeleted: false,
+            isEdited: false,
+            replies: []
+        }
+    }
+
+    private focusCommentTextArea(comment: IComment): void {
+        this.textAreaRef.nativeElement.focus();
+        this.setCommentTextAreaValue(comment);
+    }
+
+    private setCommentTextAreaValue(comment: IComment): void {
+        this.textAreaRef.nativeElement.value = comment.text;
+    }
+
+    private getCommentTextAreaValue(): string {
+        return String(this.textAreaRef.nativeElement.value).trim();
     }
 
 }

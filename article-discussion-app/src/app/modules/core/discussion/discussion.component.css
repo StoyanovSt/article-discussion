@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
   padding: 0 2rem;
-  margin: 2rem 0rem 1rem 0rem;
+  margin: 2rem 0rem 2rem 0rem;
 }
 .article-content {
   display: flex;
@@ -38,7 +38,7 @@
   outline: none;
   border-radius: 0.25rem;
   padding: 1rem;
-  margin-top: 2rem;
+  margin-top: 3.75rem;
 }
 .focused {
   border-bottom-color: #5b5fc7;
