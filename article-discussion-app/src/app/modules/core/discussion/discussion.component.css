@@ -56,6 +56,9 @@
 .sorting-panel img {
   cursor: pointer;
 }
+.sorting-label {
+  font-size: 0.75rem;
+}
 .spacer {
   height: 1rem;
 }

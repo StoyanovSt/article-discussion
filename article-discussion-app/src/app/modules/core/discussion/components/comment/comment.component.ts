@@ -45,4 +45,8 @@ export class CommentComponent implements AfterViewInit {
     public onEditComment(commentId: string): void {
         this.editCommentIdEmmitter.emit(commentId);
     }
+
+    public onReplyToComment(): void {
+        
+    }
 }

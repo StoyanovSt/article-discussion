@@ -23,25 +23,26 @@
         <img src="../../../../assets/images/svg/sort-up.svg" [matMenuTriggerFor]="ascMenu" alt="sort-asc-icon">
         <mat-menu #ascMenu="matMenu">
             <button mat-menu-item (click)="onSortComments(sortingEnum['By replies ascending'])">
-                {{sortingEnum[0]}}
+                <div class="sorting-label">{{sortingEnum[0]}}</div>
             </button>
             <button mat-menu-item (click)="onSortComments(sortingEnum['By date ascending'])">
-                {{sortingEnum[2]}}
+                <div class="sorting-label">{{sortingEnum[2]}}</div>
             </button>
         </mat-menu>
         <img src="../../../../assets/images/svg/sort-down.svg" [matMenuTriggerFor]="descMenu" alt="sort-desc-icon">
         <mat-menu #descMenu="matMenu">
             <button mat-menu-item (click)="onSortComments(sortingEnum['By replies descending'])">
-                {{sortingEnum[1]}}
+                <div class="sorting-label">{{sortingEnum[1]}}</div>
             </button>
             <button mat-menu-item (click)="onSortComments(sortingEnum['By date descending'])">
-                {{sortingEnum[3]}}
+                <div class="sorting-label">{{sortingEnum[3]}}</div>
             </button>
         </mat-menu>
     </div>
     <div class="comments-section">
         <app-comment *ngFor="let comment of comments" [comment]="comment" (commentIdEmmitter)="onDeleteComment($event)"
-            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)"></app-comment>
+            (deletedCommentIdEmmitter)="onRestoreComment($event)" (editCommentIdEmmitter)="onEditComment($event)">
+        </app-comment>
     </div>
     <textarea class="comment-area" rows="1" placeholder="Leave a comment" #textAreaRef
         (focusin)="onFocusInTextArea(textAreaRef)" (focusout)="onFocusOutTextArea(textAreaRef)"

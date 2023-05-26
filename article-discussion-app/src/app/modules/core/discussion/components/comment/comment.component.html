@@ -8,18 +8,22 @@
             <div class="comment-timestamp">{{comment?.timestamp | date: 'MMM d, y, h:mm:ss a'}}</div>
             <div *ngIf="comment.isEdited" class="edited-label">Edited</div>
             <div [matMenuTriggerFor]="appMenu" #optionsMenuIconRef class="options-menu-icon">
-                <img src="../../../../../../assets/images/jpg/options-menu-icon.jpg" alt="options-menu-icon">
+                <img src="../../../../../../assets/images/svg/three-dots.svg" alt="options-menu-icon">
             </div>
             <mat-menu #appMenu="matMenu">
                 <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn" (click)="onDeleteComment(comment.id)">
-                    <img src="../../../../../../assets/images/svg/delete-btn.svg" />
+                    <img src="../../../../../../assets/images/svg/delete-btn-icon.svg" />
                     <div class="menu-btn-text-wrapper">Delete
                         comment</div>
                 </button>
                 <button *ngIf="comment?.userId === CLIENT_ID" mat-menu-item class="menu-btn" (click)="onEditComment(comment.id)">
-                    <img src="../../../../../../assets/images/svg/edit-btn.svg" />
+                    <img src="../../../../../../assets/images/svg/edit-btn-icon.svg" />
                     <div class="menu-btn-text-wrapper">Edit
                         comment</div>
+                </button>
+                <button mat-menu-item class="menu-btn" (click)="onReplyToComment()">
+                    <img src="../../../../../../assets/images/svg/reply-btn-icon.svg" />
+                    <div class="menu-btn-text-wrapper">Reply to comment</div>
                 </button>
             </mat-menu>
         </div>

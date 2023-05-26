@@ -49,23 +49,23 @@
 .options-menu-icon {
   position: absolute;
   right: -1rem;
-  top: -1.85rem;
+  top: -1.5rem;
   cursor: pointer;
   display: none;
+  background-color: #fff;
 }
 .options-menu-icon img {
   border-radius: 0.375rem;
-  max-height: 1.7rem;
-  box-shadow: 1px 2px 4px 2px gainsboro;
+  box-shadow: 1px 2px 4px 1px gainsboro;
 }
 .menu-btn {
   display: flex;
   align-items: center;
 }
 .menu-btn-text-wrapper {
-  margin-left: 0.5rem;
+  margin-left: 0.75rem;
   margin-right: 0.5rem;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 .undo-btn {
   margin-left: 0.5rem;
